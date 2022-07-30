@@ -8,13 +8,13 @@
 USING_YOSYS_NAMESPACE
 PRIVATE_NAMESPACE_BEGIN
 
-struct MyPass : public Pass {
-  MyPass() : Pass("mypass", "My Pass") { }
+struct RtlilDump : public Pass {
+  RtlilDump() : Pass("rtlil_dump", "My Pass") { }
   void help() override
   {
     //    |---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|---v---|
     log ("\n");
-    log ("    mypass\n");
+    log ("    rtlil_dump\n");
     log ("\n");
   }
 
@@ -134,7 +134,7 @@ struct MyPass : public Pass {
 
   }
 
-} MyPass;
+} RtlilDump;
 
 
 PRIVATE_NAMESPACE_END
