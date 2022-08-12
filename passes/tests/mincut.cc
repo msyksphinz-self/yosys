@@ -81,7 +81,7 @@ struct Mincut : public Pass {
       for (int i = 0; i < num_cells / 2; i++) {
         vec_grp_a.push_back (m_vec_cell_hash[i]);
       }
-      for (; i < num_cells; i++) {
+      for (int i = num_cells / 2; i < num_cells; i++) {
         vec_grp_b.push_back (m_vec_cell_hash[i]);
       }
     }
