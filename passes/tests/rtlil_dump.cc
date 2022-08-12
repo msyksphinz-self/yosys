@@ -47,7 +47,7 @@ struct RtlilDump : public Pass {
   void search_cells (RTLIL::Module* module) {
     log("  Cells :\n");
     for (auto cell : module->cells()) {
-      log("   Name = %s\n", cell->name.c_str());
+      log("   Name = %s (%x)\n", cell->name.c_str(), cell->hashidx_);
       for (auto &conn: cell->connections()) {
         log ("    SigSpec : %s <-> ", conn.first.c_str());
         search_sigspec (conn.second);
@@ -60,8 +60,10 @@ struct RtlilDump : public Pass {
     log("  Connections :\n");
     auto conn = module->connections();
     for (auto iter = conn.begin(); iter != conn.end(); iter++) {
-      log("   %s <- %s\n", (*iter).first.as_chunk().wire->name.c_str(),
-          (*iter).second.as_chunk().wire->name.c_str());
+      search_sigspec ((*iter).first);
+      log(" <- ");
+      search_sigspec ((*iter).second);
+      log("\n");
     }
   }
 
@@ -99,12 +101,17 @@ struct RtlilDump : public Pass {
       search_sigchunk(sigspec.as_chunk());
     } else if (sigspec.is_wire()) {
       search_sigwire(sigspec.as_wire());
+    } else {
+      log ("Unexpected search_sigspec\n");
+      exit (1);
     }
   }
 
   void search_sigchunk (RTLIL::SigChunk chunk) {
     if (chunk.wire) {
       log ("chunk %s", chunk.wire->name.c_str());
+    } else {
+      log ("const");
     }
   }
 
