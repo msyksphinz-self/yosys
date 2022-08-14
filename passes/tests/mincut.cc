@@ -54,8 +54,9 @@ struct Mincut : public Pass {
 
       // Dump
       for (auto cell : (*iter)->cells()) {
-        log("%x\n", cell->hashidx_);
+        log("%x ", cell->hashidx_);
       }
+      log ("\n");
 
       // Connections
       for (auto cell : (*iter)->cells()) {
@@ -93,7 +94,7 @@ struct Mincut : public Pass {
       int tmp_cnt = 0;
       do {
 
-        log ("Mincut Do While Loop, tmp_cnt = %d\n", tmp_cnt);
+        // log ("Mincut Do While Loop, tmp_cnt = %d\n", tmp_cnt);
 
         size_t num_cells = vec_grp_a.size() + vec_grp_b.size();
 
@@ -210,7 +211,7 @@ struct Mincut : public Pass {
             k_max = k;
           }
         }
-        // log ("k_max = %zu, g_max = %d\n", k_max, gv_total_max);
+        log ("tmp_cnt = %d, k_max = %zu, g_max = %d\n", tmp_cnt, k_max, gv_total_max);
 
         if (gv_total_max <= 0) {
           vec_grp_a.swap (av);
@@ -236,12 +237,12 @@ struct Mincut : public Pass {
 
     log ("Group A : ");
     for (auto a : vec_grp_a) {
-      log ("%d, ", a);
+      log ("%08x, ", a);
     }
     log ("\n");
     log ("Group B : ");
     for (auto b : vec_grp_b) {
-      log ("%d, ", b);
+      log ("%08x, ", b);
     }
     log ("\n");
 
